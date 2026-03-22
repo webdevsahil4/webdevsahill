@@ -34,7 +34,7 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           <a href="#home" className="text-2xl font-bold font-display tracking-tight text-foreground relative group">
-            Alex Morgan<span className="text-primary">.</span>
+            Sahil Dodiya<span className="text-primary">.</span>
             <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
           </a>
 

@@ -13,7 +13,7 @@ export function About() {
   return (
     <Section id="about">
       <div className="grid lg:grid-cols-2 gap-16 items-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -21,26 +21,29 @@ export function About() {
           className="relative"
         >
           <div className="aspect-[4/5] rounded-3xl overflow-hidden relative z-10 border border-white/10">
-            <img 
-              src={`${import.meta.env.BASE_URL}images/avatar.png`} 
-              alt="Alex Morgan" 
-              className="w-full h-full object-cover"
+            <img
+              src={`${import.meta.env.BASE_URL}images/sahil.png`}
+              alt="Sahil Dodiya"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
-          {/* Decorative element behind image */}
-          <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-[2rem] blur-2xl -z-10"></div>
+          {/* Decorative glow behind image */}
+          <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-[2rem] blur-2xl -z-10" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Building Digital <br/><span className="text-primary">Masterpieces.</span></h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            Building Digital <br />
+            <span className="text-primary">Masterpieces.</span>
+          </h2>
           <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-            I'm Alex Morgan, a full-stack CMS developer with 5+ years of experience building high-performance websites that convert visitors into customers. 
+            I'm <span className="text-foreground font-semibold">Sahil Dodiya</span>, a full-stack CMS developer with 3.5+ years of experience building high-performance websites that convert visitors into customers.
           </p>
           <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
             I specialize in WordPress, Webflow, Wix, and Squarespace — bridging the gap between stunning design and flawless technical execution.
