@@ -1,0 +1,101 @@
+{
+  "colorScheme": "dark",
+  "fonts": [
+    {
+      "family": "Big Shoulders",
+      "role": "heading"
+    }
+  ],
+  "colors": {
+    "primary": "#3898EC",
+    "accent": "#0082F3",
+    "background": "#000000",
+    "textPrimary": "#000000",
+    "link": "#0082F3"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Big Shoulders",
+      "heading": "Big Shoulders"
+    },
+    "fontStacks": {
+      "heading": [
+        "Big Shoulders",
+        "sans-serif"
+      ],
+      "body": [
+        "Big Shoulders",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Big Shoulders",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "300px",
+      "h2": "200px",
+      "body": "18px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "0px"
+  },
+  "components": {
+    "input": {
+      "background": "transparent",
+      "textColor": "#E4EBEE",
+      "borderColor": null,
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "favicon": "File saved at: attached_assets/favicon.png",
+    "ogImage": "File saved at: attached_assets/ogImage.png"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": -1,
+    "reasoning": "No valid brand logo - only tiny/invisible/UI icons. Candidate #0 is too small and likely a UI icon, while others are not suitable as brand logos.",
+    "confidence": 0.3,
+    "rejected": true,
+    "source": "llm"
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "creative professionals"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0.9,
+    "overall": 0.45
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": -1,
+        "selectedLogoReasoning": "No valid brand logo - only tiny/invisible/UI icons. Candidate #0 is too small and likely a UI icon, while others are not suitable as brand logos.",
+        "confidence": 0.3
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": false,
+      "llmSucceeded": false
+    }
+  }
+}
