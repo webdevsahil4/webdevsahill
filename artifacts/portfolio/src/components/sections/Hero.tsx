@@ -2,138 +2,42 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-interface Ripple {
-  x: number;
-  y: number;
-  radius: number;
-  maxRadius: number;
-  life: number;
-  id: number;
-}
-
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorRingRef = useRef<HTMLDivElement>(null);
-  const ripplesRef = useRef<Ripple[]>([]);
-  const mouseRef = useRef({ x: -999, y: -999 });
-  const rippleIdRef = useRef(0);
-  const lastRippleRef = useRef(0);
   const [cursorText, setCursorText] = useState("");
 
-  // Water ripple canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-    const ctx = canvas.getContext("2d")!;
-
-    const resize = () => {
-      canvas.width = container.offsetWidth;
-      canvas.height = container.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    let animFrame: number;
-
-    const draw = (ts: number) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Spawn a new ripple continuously on mousemove (throttled)
-      if (ts - lastRippleRef.current > 80) {
-        const { x, y } = mouseRef.current;
-        if (x > 0 && y > 0) {
-          ripplesRef.current.push({
-            x,
-            y,
-            radius: 0,
-            maxRadius: 130 + Math.random() * 60,
-            life: 1,
-            id: rippleIdRef.current++,
-          });
-          lastRippleRef.current = ts;
-        }
-      }
-
-      // Update & draw ripples
-      ripplesRef.current = ripplesRef.current.filter((r) => r.life > 0.01);
-
-      for (const r of ripplesRef.current) {
-        r.radius += 2.4;
-        r.life = Math.max(0, 1 - r.radius / r.maxRadius);
-
-        const alpha = r.life * 0.55;
-
-        // 3 concentric rings per ripple
-        for (let ring = 0; ring < 3; ring++) {
-          const rr = r.radius - ring * 18;
-          if (rr < 0) continue;
-          const ringAlpha = alpha * (1 - ring * 0.28);
-
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, rr, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(96,165,250,${ringAlpha.toFixed(3)})`;
-          ctx.lineWidth = Math.max(0.4, 1.6 - ring * 0.4);
-          ctx.stroke();
-        }
-
-        // Central glow dot when small
-        if (r.radius < 25) {
-          const gAlpha = (1 - r.radius / 25) * 0.35;
-          const grad = ctx.createRadialGradient(r.x, r.y, 0, r.x, r.y, 25);
-          grad.addColorStop(0, `rgba(139,92,246,${gAlpha.toFixed(3)})`);
-          grad.addColorStop(1, "rgba(96,165,250,0)");
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, 25, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
-        }
-      }
-
-      animFrame = requestAnimationFrame(draw);
-    };
-
-    animFrame = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(animFrame);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  // Cursor tracking
   useEffect(() => {
     const container = containerRef.current;
     const cursor = cursorRef.current;
     const ring = cursorRingRef.current;
     if (!container || !cursor || !ring) return;
 
-    let rX = 0, rY = 0, mX = 0, mY = 0;
-    let af: number;
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    let animFrame: number;
 
-    const onMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      mX = e.clientX - rect.left;
-      mY = e.clientY - rect.top;
-      mouseRef.current = { x: mX, y: mY };
-      cursor.style.left = `${mX}px`;
-      cursor.style.top = `${mY}px`;
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      cursor.style.left = `${mouseX}px`;
+      cursor.style.top = `${mouseY}px`;
     };
 
-    const loop = () => {
-      rX += (mX - rX) * 0.1;
-      rY += (mY - rY) * 0.1;
-      ring.style.left = `${rX}px`;
-      ring.style.top = `${rY}px`;
-      af = requestAnimationFrame(loop);
+    const animateRing = () => {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = `${ringX}px`;
+      ring.style.top = `${ringY}px`;
+      animFrame = requestAnimationFrame(animateRing);
     };
 
-    container.addEventListener("mousemove", onMove);
-    af = requestAnimationFrame(loop);
+    container.addEventListener("mousemove", handleMouseMove);
+    animFrame = requestAnimationFrame(animateRing);
     return () => {
-      container.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(af);
+      container.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animFrame);
     };
   }, []);
 
@@ -143,12 +47,6 @@ export function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden cursor-none"
     >
-      {/* Water ripple canvas — sits above background, below content */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-[2] pointer-events-none"
-      />
-
       {/* Custom cursor dot */}
       <div
         ref={cursorRef}
@@ -164,7 +62,7 @@ export function Hero() {
         {cursorText}
       </div>
 
-      {/* Background — unchanged */}
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
           src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
@@ -196,8 +94,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight mb-6 max-w-5xl"
         >
-          I Build <span className="text-gradient">High-Converting</span>{" "}
-          Websites
+          I Build <span className="text-gradient">High-Converting</span> Websites
         </motion.h1>
 
         <motion.p
@@ -223,10 +120,7 @@ export function Hero() {
             className="cursor-none px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group"
           >
             Hire Me
-            <ArrowRight
-              className="group-hover:translate-x-1 transition-transform"
-              size={18}
-            />
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
           </a>
           <a
             href="#portfolio"
