@@ -26,7 +26,6 @@ export function Contact() {
   return (
     <Section id="contact" className="relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      
       <div className="grid lg:grid-cols-2 gap-16">
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
@@ -46,9 +45,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="text-sm uppercase tracking-wider mb-1">Email</p>
-                <a href="mailto:hello@alexmorgan.dev" className="text-foreground font-medium hover:text-primary transition-colors">
-                  hello@alexmorgan.dev
-                </a>
+                <a href="mailto:hello@alexmorgan.dev" className="text-foreground font-medium hover:text-primary transition-colors">sahildodiya2004@gmail.com</a>
               </div>
             </div>
             <div className="flex items-center gap-4 text-muted-foreground">
